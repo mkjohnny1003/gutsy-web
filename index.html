@@ -6,16 +6,26 @@
 <title>GUTSY — 腸腸久久</title>
 <style>
   html,body{margin:0;padding:0;background:#20202a;min-height:100%;
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;justify-content:center;overflow:auto;
     font-family:ui-sans-serif,system-ui,sans-serif;-webkit-text-size-adjust:100%;}
   body{padding:20px 12px;box-sizing:border-box;}
   button{-webkit-tap-highlight-color:transparent;touch-action:manipulation;cursor:pointer;}
+  /* 原本寫死 max-width:360px 是照手機版型設計的，在桌機瀏覽器（視窗遠比 360px 寬）
+     裡整個機身就會縮在畫面正中央一小塊，逼玩家得把瀏覽器縮放到 170~175% 才看得清楚、
+     按得到。改成同時吃視窗寬度跟高度：手機直接吃滿寬度（94vw），桌機直接吃滿高度。
+     高度那項不是隨便抓的比例，是照機身版型實際的「寬度 → 高度」換算反推的：
+     機身高度 ≈ 0.9×寬度 + 248px（0.9 來自螢幕畫布的 216/240 長寬比，248 是機身裡
+     其餘固定高度的元件加總——銘牌文字、十字鍵/A·B 那排、SELECT/START、喇叭孔）。
+     要讓機身高度剛好吃滿可用視窗高度（視窗高度 − 上下 body padding 40px），解出來
+     寬度就是 calc(111vh - 320px)，不是憑感覺調的 vh 倍數。 */
+  /* max() 兜底：極端矮的視窗（calc 那項會算出負值）不會讓機身寬度塌縮成 0 或負值。 */
+  #gbshell{width:100%;max-width:max(240px,min(94vw,calc(111vh - 320px),820px));}
 </style>
 </head>
 <body>
 
 <div id="gbwrap">
-<div style="width:100%;max-width:360px;background:#c9c9c1;border-radius:12px 12px 44px 12px;padding:12px 12px 16px;box-sizing:border-box;border:1px solid #a8a89f;">
+<div id="gbshell" style="background:#c9c9c1;border-radius:12px 12px 44px 12px;padding:12px 12px 16px;box-sizing:border-box;border:1px solid #a8a89f;">
 
   <div style="background:#4a4a52;border-radius:8px 8px 28px 8px;padding:14px 12px 20px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin:0 0 8px;font:400 9px/1 ui-monospace,monospace;color:#9b9bb0;letter-spacing:.08em;">
